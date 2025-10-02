@@ -14,11 +14,14 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
   option(BUILD_SHARED_LIBS "Build SGP4 as a shared library." ON)
+
+  include(CTest)
 endif()
 
 option(SGP4_BUILD_SHARED_LIBS "Build sgp4 target as SHARED instead of STATIC."                                                     ${BUILD_SHARED_LIBS})
 option(SGP4_BUILD_STATIC_LIBS "Build sgp4-static target along with sgp4."                                                          ${MAIN_PROJECT})
 option(SGP4_INSTALL           "Install CMake targets during install step."                                                         ${MAIN_PROJECT})
+option(SGP4_BUILD_TESTS       "Enable SGP4 tests."                                                                                 ${MAIN_PROJECT})
 option(SGP4_ENABLE_PIC        "Enable position-independent code (ignored for sgp4 target when SGP4_BUILD_SHARED_LIBS is enabled)." ON)
 
 if(SGP4_BUILD_STATIC_LIBS AND NOT SGP4_BUILD_SHARED_LIBS)
@@ -39,6 +42,11 @@ endif()
 set(SGP4_NAMESPACE_NAME libsgp4)
 
 add_subdirectory(src)
+
+if(SGP4_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
