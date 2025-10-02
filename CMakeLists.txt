@@ -22,6 +22,7 @@ option(SGP4_BUILD_SHARED_LIBS "Build sgp4 target as SHARED instead of STATIC."  
 option(SGP4_BUILD_STATIC_LIBS "Build sgp4-static target along with sgp4."                                                          ${MAIN_PROJECT})
 option(SGP4_INSTALL           "Install CMake targets during install step."                                                         ${MAIN_PROJECT})
 option(SGP4_BUILD_TESTS       "Enable SGP4 tests."                                                                                 ${MAIN_PROJECT})
+option(SGP4_BUILD_EXAMPLES    "Enable SGP4 examples."                                                                              ${MAIN_PROJECT})
 option(SGP4_ENABLE_PIC        "Enable position-independent code (ignored for sgp4 target when SGP4_BUILD_SHARED_LIBS is enabled)." ON)
 
 if(SGP4_BUILD_STATIC_LIBS AND NOT SGP4_BUILD_SHARED_LIBS)
@@ -46,6 +47,10 @@ add_subdirectory(src)
 if(SGP4_BUILD_TESTS)
   enable_testing()
   add_subdirectory(tests)
+endif()
+
+if(SGP4_BUILD_EXAMPLES)
+  add_subdirectory(examples)
 endif()
 
 include(GNUInstallDirs)
